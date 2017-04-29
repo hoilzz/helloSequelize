@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <title>chat simulator</title>
+    <link rel="stylesheet" href="stylesheets/app.css">
+</head>
+<body>
+    <h1>chat simulator</h1>
+
+    <div class="chat_room">
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="javascripts/User.js"></script>
+    <script src="javascripts/Message.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            (function($){
+                var jqxhr = $.ajax({
+                    method:"GET",
+                    url: "/sample.json",
+                    dataType:"json",
+                    async:"false"
+                }).done(function(data) {
+                            var dataArr = JSON.parse(JSON.parse(data));
+                            Message.populate(dataArr);
+                            Message.triggerSimulate();
+                        })
+                        .fail(function() {
+                            console.log( "error" );
+                        })
+            })(jQuery);
+
+        })
+    </script>
+</body>
+</html>

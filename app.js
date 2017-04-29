@@ -1,17 +1,21 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
+var cookieSession = require('cookie-session');
+var flash = require('connect-flash');
 
 
 // 사용자 정의 모듈 추출
 var index = require('./routes/index');
-var users = require('./routes/users');
-var products = require('./routes/products');
-var db = require('./model');
+// var users = require('./routes/users');
+// var products = require('./routes/products');
+// var db = require('./model/index');
 
 // 서버 생성
 var app = express();
@@ -30,12 +34,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'node_modules'))); // 노드모듈 디렉토토리 추가
+app.use(cookieSession({
+  keys: ['node_hoo'],
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 유효기간 1시간
+  }
+}));
+
+app.use(flash());
+// passport를 미들웨어로 등록
+app.use(passport.initialize());
+app.use(passport.session());
 
 // 라우터 미들웨어 설정
 app.use('/', index);
-app.use('/users', users);
-app.use('/products', products);
-
+// app.use('/users', users);
+// app.use('/products', products);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -55,7 +70,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-console.log("export 합니다.");
+// console.log("export 합니다.");
 
 
 // 모듈화 한다

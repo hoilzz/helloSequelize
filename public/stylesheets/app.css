@@ -1,0 +1,42 @@
+html,
+body{
+  height:100%;
+}
+html{
+  font-size:14px;
+}
+body,
+p{
+  margin:0;
+}
+
+.chat_room{
+  overflow:auto;
+  width:720px;
+  height:100%;
+  margin: 0 auto;
+  padding:50px;
+  border: 1px solid #000;
+}
+
+.msg .user_id,
+.msg .user_info .user_id{
+  padding-right:10px;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.msg{
+  margin-top:20px;
+}
+
+.msg .existed_msg{
+  color:#9e9e9e;
+}
+.notice{
+  color:#ffa726;
+}
+
+.msg .changed_msg{
+  font-weight:bold;
+}
